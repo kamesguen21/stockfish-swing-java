@@ -1,0 +1,239 @@
+		next.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if (backcount != 0) {
+					try {
+						board.doMove(moveslist.get(moveslist.size() - backcount));
+					} catch (IndexOutOfBoundsException e) {
+						// TODO Auto-generated catch block
+
+					}
+					fillpiecestolist(list1, board.getFen());
+					filllisttoarray(list1);
+					backcount--;
+				}
+				if(startclicked) {
+				for	(Move i:moveslist)
+					{
+						board.doMove(i)	;
+					}
+				fillpiecestolist(list1, board.getFen());
+				filllisttoarray(list1);
+				startclicked=false;
+			}	
+			}
+		});
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if (!moveslist.isEmpty() && !board.getFen().contains("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")) {
+
+					board.undoMove();
+					fillpiecestolist(list1, board.getFen());
+					filllisttoarray(list1);
+					backcount++;
+				}
+
+			}
+		});
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				int i =moveslist.size();
+				while(i!=0) 
+				{
+					board.undoMove();
+					i--;
+				
+				}
+				startclicked=true;
+					fillpiecestolist(list1,board.getFen());
+					filllisttoarray(list1);
+				}
+		});		
+		last.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if (!moveslist.isEmpty() && !board.getFen().contains("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")) {
+
+					board.undoMove();
+					fillpiecestolist(list1, board.getFen());
+					filllisttoarray(list1);
+					backcount++;
+
+				}
+
+			}
+		});	
+		play.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				if (!moveslist.isEmpty() && !board.getFen().contains("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")) {
+
+					board.undoMove();
+					fillpiecestolist(list1, board.getFen());
+					filllisttoarray(list1);
+					backcount++;
+
+				}
+
+			}
+		});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////////////////
+	java
+    PgnHolder pgn = new PgnHolder("/opt/games/linares_2002.pgn");
+    pgn.loadPgn();
+    for (Game game: pgn.getGame()) {
+        game.loadMoveText();
+        MoveList moves = game.getHalfMoves();
+        Board board = new Board();
+        //Replay all the moves from the game and print the final position in FEN format
+        for (Move move: moves) {
+            board.doMove(move);
+        }
+        System.out.println("FEN: " + board.getFen());
+	//////////////////////////////////
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	Move movetest = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)));
+			if (!board.isMoveLegal(movetest, true)) {
+				JOptionPane.showMessageDialog(bord, "illegal move");
+				fillpiecestolist(list1, board.getFen());
+				filllisttoarray(list1);
+	
+				}
+			
+			else if(board.getContext().isCastleMove(movetest))
+			{
+				 moveslist.add(movetest);
+					board.doMove(movetest);
+					castle=true;
+				System.out.println("\n\\n\\n\\n\\ncastle"+board.getFen());
+			}
+			 else if (ispromotion(s.get(0), s.get(1), o) == "l") {
+				int n = 0;
+				switch (promotion()) {
+				case 0:
+					o.setIcon(queenl);
+					break;
+				case 1:
+					n = 1;
+					o.setIcon(rookl);
+					break;
+				case 2:
+					n = 2;
+					o.setIcon(bishopl);
+					break;
+				case 3:
+					n = 3;
+					o.setIcon(knightl);
+					break;
+				}
+				switch (n) {
+				case 0:
+					Move move = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.WHITE_QUEEN);
+					moveslist.add(move);
+					board.doMove(move);
+
+					break;
+				case 1:
+					Move move1 = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.WHITE_ROOK);
+					moveslist.add(move1);
+					board.doMove(move1);
+
+					break;
+				case 2:
+					Move move2 = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.WHITE_BISHOP);
+					moveslist.add(move2);
+					board.doMove(move2);
+
+					break;
+				case 3:
+					Move move3 = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.WHITE_KNIGHT);
+					moveslist.add(move3);
+					board.doMove(move3);
+					break;
+				}
+
+				System.out.println("board fen  " + board.getFen());
+
+			} else if (ispromotion(s.get(0), s.get(1), o) == "d") {
+				int n = 0;
+				switch (promotion()) {
+				case 0:
+					o.setIcon(queend);
+					break;
+				case 1:
+					n = 1;
+					o.setIcon(rookd);
+					break;
+				case 2:
+					n = 2;
+					o.setIcon(bishopd);
+					break;
+				case 3:
+					n = 3;
+					o.setIcon(knightd);
+					break;
+				}
+				switch (n) {
+				case 0:
+					Move move = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.BLACK_QUEEN);
+					moveslist.add(move);
+					board.doMove(move);
+
+					break;
+				case 1:
+					Move move1 = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.BLACK_ROOK);
+					moveslist.add(move1);
+					board.doMove(move1);
+
+					break;
+				case 2:
+					Move move2 = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.BLACK_BISHOP);
+					moveslist.add(move2);
+					board.doMove(move2);
+
+					break;
+				case 3:
+					Move move3 = new Move(Square.valueOf(s.get(0)), Square.valueOf(s.get(1)), Piece.BLACK_KNIGHT);
+					moveslist.add(move3);
+					board.doMove(move3);
+					break;
+				}
+				System.out.println("board fen  " + board.getFen());
+
+			} 
+			else   {
+		
+			if(!castle){
+					moveslist.add(movetest);
+					board.doMove(movetest);
+					legalmoveslist.clear();
+					MoveGenerator.generateKingMoves(board, legalmoveslist);
+					System.out.println(board.getFen());}}
